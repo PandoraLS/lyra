@@ -1,1 +1,8 @@
 *~
+
+# 环境和编译
+.idea/
+bazel-bin/
+bazel-lyra/
+bazel-out/
+bazel-testlogs/
