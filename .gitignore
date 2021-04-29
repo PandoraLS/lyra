@@ -1,6 +1,12 @@
 *~
 
-# 环境和编译
+# 文件
+bazel-bin
+bazel-lyra
+bazel-out
+bazel-testlogs
+
+# 环境和编译文件
 .idea/
 bazel-bin/
 bazel-lyra/
