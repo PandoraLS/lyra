@@ -111,11 +111,3 @@ bazel-bin/encoder_main --model_path=wavegru --output_dir=$HOME/temp --input_path
 bazel build -c opt :decoder_main
 bazel-bin/decoder_main  --model_path=wavegru --output_dir=$HOME/temp/ --encoded_path=$HOME/temp/16khz_sample_000001.lyra
 ```
-
-
-## tmp
-git config --global --unset http.proxy
-git config --global --unset https.proxy
-
-git config --global http.proxy 'socks5://127.0.0.1:1088'
-git config --global https.proxy 'socks5://127.0.0.1:1088'
