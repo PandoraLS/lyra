@@ -111,3 +111,60 @@ bazel-bin/encoder_main --model_path=wavegru --output_dir=$HOME/temp --input_path
 bazel build -c opt :decoder_main
 bazel-bin/decoder_main  --model_path=wavegru --output_dir=$HOME/temp/ --encoded_path=$HOME/temp/16khz_sample_000001.lyra
 ```
+
+如果要进行debug，使用vscode 进行debug
+
+encoder_main的debug配置， decoder_main的debug配置同理，debug只有第一次需要链接全部文件，所以耗时较久，后面就好了
+
+launch.json 文件 
+```shell
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Bazel build",
+            "preLaunchTask": "build",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bazel-bin/encoder_main",
+            "args": [
+                "--model_path=wavegru",
+                "--output_dir=$HOME/temp",
+                "--input_path=${workspaceFolder}/testdata/16khz_sample_000001.wav"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bazel-bin/encoder_main.runfiles/__main__/",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "sourceFileMap": {"/proc/self/cwd":"${workspaceFolder}"}, // https://gitter.im/vscode-lldb/QnA?at=5e30bb93594a0517c2407b11
+            "miDebuggerArgs": "-q -ex quit; wait() { fg >/dev/null; }; /bin/gdb -q --interpreter=mi", // https://github.com/microsoft/vscode-cpptools/issues/3298
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": false
+                }
+            ]
+        },
+    ]
+}
+```
+
+tasks.json 文件
+```shell
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "bazel build -c dbg :encoder_main",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
+```
