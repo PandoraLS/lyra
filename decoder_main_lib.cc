@@ -36,6 +36,8 @@
 #include "lyra_decoder.h"
 #include "wav_util.h"
 
+#define SEENLI_DEBUG
+
 namespace chromemedia {
 namespace codec {
 namespace {
@@ -146,6 +148,15 @@ bool DecodeFile(const ghc::filesystem::path& encoded_path,
     LOG(ERROR) << "Unable to decode features for file " << encoded_path;
     return false;
   }
+
+#ifdef SEENLI_DEBUG
+  std::cout << "============= decoded_audio =============" << std::endl;
+  std::vector<int16_t>::iterator ite = decoded_audio.begin();
+  for (; ite != decoded_audio.end(); ite++) {
+    std::cout << *ite;
+  }
+  std::cout << std::endl;
+#endif
 
   absl::Status write_status =
       Write16BitWavFileFromVector(output_path.string(), decoder->num_channels(),

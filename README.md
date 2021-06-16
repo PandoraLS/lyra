@@ -101,6 +101,11 @@ bazel build -c opt :encoder_main
 
 ```shell
 bazel-bin/encoder_main --model_path=wavegru --output_dir=$HOME/temp --input_path=testdata/16khz_sample_000001.wav
+
+# output
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I20210616 09:27:20.503815  9142 encoder_main_lib.cc:94] Elapsed seconds : 0 # 耗时0秒
+I20210616 09:27:20.504074  9142 encoder_main_lib.cc:95] Samples per second : 3.72564e+06
 ```
 
 `$HOME/temp/` 文件夹下会生成一编码后的文件`*.lyra`
@@ -110,7 +115,31 @@ bazel-bin/encoder_main --model_path=wavegru --output_dir=$HOME/temp --input_path
 ```shell
 bazel build -c opt :decoder_main
 bazel-bin/decoder_main  --model_path=wavegru --output_dir=$HOME/temp/ --encoded_path=$HOME/temp/16khz_sample_000001.lyra
+
+# output
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W20210616 09:31:21.751451  9802 lyra_wavegru.h:80] lyra_wavegru running in slow generic mode.
+I20210616 09:31:21.753964  9802 layer_wrapper.h:96] |lyra_16khz_ar_to_gates_| layer:  Shape: [3072, 4]. Sparsity: 0
+I20210616 09:31:22.032354  9802 layer_wrapper.h:96] |lyra_16khz_gru_layer_| layer:  Shape: [3072, 1024]. Sparsity: 0.9375
+I20210616 09:31:22.070669  9802 lyra_wavegru.h:226] Model size: 1271266 bytes
+I20210616 09:31:22.070955  9802 wavegru_model_impl.cc:87] Feature size: 160
+I20210616 09:31:22.071512  9802 wavegru_model_impl.cc:88] Number of samples per hop: 640
+I20210616 09:31:22.089547  9802 layer_wrapper.h:96] |lyra_16khz_conv1d_| layer:  Shape: [512, 480]. Sparsity: 0.919987
+I20210616 09:31:22.126284  9802 layer_wrapper.h:96] |lyra_16khz_conditioning_stack_0_| layer:  Shape: [512, 1024]. Sparsity: 0.920013
+I20210616 09:31:22.172271  9802 layer_wrapper.h:96] |lyra_16khz_conditioning_stack_1_| layer:  Shape: [512, 1024]. Sparsity: 0.920013
+I20210616 09:31:22.220367  9802 layer_wrapper.h:96] |lyra_16khz_conditioning_stack_2_| layer:  Shape: [512, 1024]. Sparsity: 0.920013
+I20210616 09:31:22.261426  9802 layer_wrapper.h:96] |lyra_16khz_transpose_0_| layer:  Shape: [1024, 512]. Sparsity: 0.920013
+I20210616 09:31:22.295868  9802 layer_wrapper.h:96] |lyra_16khz_transpose_1_| layer:  Shape: [1024, 512]. Sparsity: 0.920013
+I20210616 09:31:22.337258  9802 layer_wrapper.h:96] |lyra_16khz_transpose_2_| layer:  Shape: [1024, 512]. Sparsity: 0.920013
+I20210616 09:31:22.374413  9802 layer_wrapper.h:96] |lyra_16khz_conv_cond_| layer:  Shape: [1024, 512]. Sparsity: 0.920013
+I20210616 09:31:22.586452  9802 layer_wrapper.h:96] |lyra_16khz_conv_to_gates_| layer:  Shape: [3072, 1024]. Sparsity: 0.919998
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W20210616 09:31:22.599963  9802 kernels_generic.h:241] SumVectors: using generic kernel!
+I20210616 09:31:34.903664  9802 decoder_main_lib.cc:96] Elapsed seconds : 12 # 耗时 12秒
+I20210616 09:31:34.903755  9802 decoder_main_lib.cc:97] Samples per second : 9827.37
 ```
+
+## debug with vscode
 
 如果要进行debug，使用vscode 进行debug
 
@@ -128,7 +157,7 @@ launch.json 文件
             "request": "launch",
             "program": "${workspaceFolder}/bazel-bin/encoder_main",
             "args": [
-                "--model_path=wavegru",
+                "--model_path=${workspaceFolder}/wavegru",
                 "--output_dir=$HOME/temp",
                 "--input_path=${workspaceFolder}/testdata/16khz_sample_000001.wav"
             ],

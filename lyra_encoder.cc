@@ -221,7 +221,7 @@ absl::optional<std::vector<uint8_t>> LyraEncoder::EncodeInternal(
   }
 
   // We send an empty packet only if all constituent frames are noise similar
-  // to the previous ones.
+  // to the previous ones. 只有当所有组成帧的噪声与前一帧相似时, 我们才发送一个空包
   int num_similar_noise_frames = 0;
   std::vector<float> concatenated_features;
   for (int i = 0; i < num_frames_per_packet_; ++i) {
