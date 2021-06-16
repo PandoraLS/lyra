@@ -142,6 +142,15 @@ bool DecodeFile(const ghc::filesystem::path& encoded_path,
                  packet_stream.begin(),
                  [](char packet) { return static_cast<uint8_t>(packet); });
 
+#ifdef SEENLI_DEBUG
+  std::cout << "============= packet_stream =============" << std::endl;
+  std::vector<uint8_t>::iterator ite_packet = packet_stream.begin();
+  for (; ite_packet != packet_stream.end(); ite_packet++) {
+    std::cout << *ite_packet;
+  }
+  std::cout << "============= packet_stream end =============" << std::endl;
+#endif
+
   std::vector<int16_t> decoded_audio;
   if (!DecodeFeatures(packet_stream, packet_loss_rate, average_burst_length,
                       decoder.get(), &decoded_audio)) {
@@ -155,7 +164,7 @@ bool DecodeFile(const ghc::filesystem::path& encoded_path,
   for (; ite != decoded_audio.end(); ite++) {
     std::cout << *ite;
   }
-  std::cout << std::endl;
+  std::cout << "============= decoded_audio end =============" << std::endl;
 #endif
 
   absl::Status write_status =
