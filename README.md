@@ -243,8 +243,28 @@ sudo apt install adb # 后面会用
  ```shell
 bazel build android_example:lyra_android_example --config=android_arm64 --copt=-DBENCHMARK
 ```
-
 编译完之后，得到`lyra_android_example.apk`
+
+安卓机需要打开开发者模式，然后安装到手机,配置开发者选项(小米8)：
+设置->我的设备->全部参数->MIUI版本(点5次)->退回到更多设置->开发者选项->usb调试
+
+```shell
+lsusb # 查看挂载的usb
+adb devices [-l] # 查看挂载的设备 -l 是输出更多信息
+
+# 实例
+lisen@lisen-ubuntu:~/workspace/code/lyra$ lsusb
+Bus 001 Device 007: ID 18d1:4ee7 Google Inc. MI 8
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 003: ID 0e0f:0002 VMware, Inc. Virtual USB Hub
+Bus 002 Device 002: ID 0e0f:0003 VMware, Inc. Virtual Mouse
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+lisen@lisen-ubuntu:~/workspace/code/lyra$ adb devices -l
+List of devices attached
+a0737173               device usb:1-1 product:dipper model:MI_8 device:dipper transport_id:2
 ```
-bazel-bin/android_example/lyra_android_example.apk
+
+安装到手机，别忘了通过手机应用安装提示
+```
+adb install bazel-bin/android_example/lyra_android_example.apk
 ```
