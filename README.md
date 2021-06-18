@@ -197,3 +197,54 @@ tasks.json 文件
     ]
 }
 ```
+
+
+### Android requirement
+[下载安卓 sdkmanager](https://developer.android.com/studio#command-tools)
+
+解压 并 cd 到解压目录, 检查要安装的可用软件包，以防它们与以下步骤不匹配。
+```shell
+bin/sdkmanager  --sdk_root=$HOME/android/sdk --list
+```
+Some systems will already have the java runtime set up.  But if you see an error
+here like `ERROR: JAVA_HOME is not set and no 'java' command could be found
+on your PATH.`, this means you need to install the java runtime with `sudo apt
+install default-jdk` first. You will also need to add `export
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64` (type `ls /usr/lib/jvm` to see
+which path was installed) to your $HOME/.bashrc and reload it with `source
+$HOME/.bashrc`.
+
+Install the r21 ndk, android sdk 29, and build tools:
+```shell
+bin/sdkmanager  --sdk_root=$HOME/android/sdk --install  "platforms;android-29" "build-tools;29.0.3" "ndk;21.4.7075529"
+```
+
+添加环境变量到`.bashrc`
+```shell
+export ANDROID_NDK_HOME=$HOME/android/sdk/ndk/21.4.7075529
+export ANDROID_HOME=$HOME/android/sdk
+```
+
+重载环境变量 
+```shell
+source $HOME/.bashrc
+```
+
+
+### build for andorid
+
+此示例是一个具有最小 GUI 的应用程序，其中包含两个选项的按钮。 一种选择是从麦克风录音并使用 Lyra 进行编码/解码，以便您 可以测试 Lyra 听起来像你的声音。 另一个选项运行一个 在后台编码和解码并将时间打印到的基准测试 logcat。
+```shell
+sudo apt install adb # 后面会用
+```
+
+命令行进入到 `lyra/` 目录下
+
+ ```shell
+bazel build android_example:lyra_android_example --config=android_arm64 --copt=-DBENCHMARK
+```
+
+编译完之后，得到`lyra_android_example.apk`
+```
+bazel-bin/android_example/lyra_android_example.apk
+```
