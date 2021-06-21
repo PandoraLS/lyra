@@ -114,7 +114,7 @@ I20210616 09:27:20.504074  9142 encoder_main_lib.cc:95] Samples per second : 3.7
 
 ```shell
 bazel build -c opt :decoder_main
-bazel-bin/decoder_main  --model_path=wavegru --output_dir=$HOME/temp/ --encoded_path=$HOME/temp/16khz_sample_000001.lyra
+bazel-bin/decoder_main --model_path=wavegru --output_dir=$HOME/temp/ --encoded_path=$HOME/temp/16khz_sample_000001.lyra
 
 # output
 WARNING: Logging before InitGoogleLogging() is written to STDERR

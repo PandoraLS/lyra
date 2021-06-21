@@ -36,7 +36,7 @@
 #include "lyra_decoder.h"
 #include "wav_util.h"
 
-#define SEENLI_DEBUG
+// #define SEENLI_DEBUG
 
 namespace chromemedia {
 namespace codec {
