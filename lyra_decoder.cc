@@ -138,26 +138,26 @@ bool LyraDecoder::SetEncodedPacket(absl::Span<const uint8_t> encoded) {
     return false;
   }
 
-  const auto unpacked_or = packet_->UnpackPacket(encoded);
+  const auto unpacked_or = packet_->UnpackPacket(encoded); // 将packet解压得到量化的特征
   if (!unpacked_or.has_value()) {
     LOG(ERROR) << "Couldn't read Lyra packet for decoding.";
     return false;
   }
 
   std::vector<float> concatenated_features =
-      vector_quantizer_->DecodeToLossyFeatures(unpacked_or.value());
+      vector_quantizer_->DecodeToLossyFeatures(unpacked_or.value()); // 恢复出mel features(有损恢复)
   const int num_features =
       concatenated_features.size() / num_frames_per_packet_;
   for (int i = 0; i < num_frames_per_packet_; ++i) {
     const std::vector<float> features(
         concatenated_features.begin() + num_features * i,
-        concatenated_features.begin() + num_features * (i + 1));
+        concatenated_features.begin() + num_features * (i + 1)); //一帧数据 160个 mel bins 对应640字节
     if (!packet_loss_handler_->SetReceivedFeatures(features)) {
       LOG(ERROR) << "Unable to update packet loss handler.";
       return false;
     }
 
-    generative_model_->AddFeatures(features);
+    generative_model_->AddFeatures(features); // 将 160 维 log mel 喂给模型 (这里并没有进行features只是一帧的log mel bins) 
   }
 
   internal_num_samples_available_ =

@@ -104,7 +104,7 @@ void WavegruModelImpl::AddFeatures(const std::vector<float>& features) {
   const int kNumFrames = 1;
   csrblocksparse::FatCacheAlignedVector<float> input(features.size(),
                                                      kNumFrames);
-  std::copy(features.begin(), features.end(), input.data());
+  std::copy(features.begin(), features.end(), input.data()); // 160行 1列
   wavegru_->ResetConditioningStart();
 
 #ifdef BENCHMARK
