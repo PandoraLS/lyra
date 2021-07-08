@@ -264,6 +264,12 @@ List of devices attached
 a0737173               device usb:1-1 product:dipper model:MI_8 device:dipper transport_id:2
 ```
 
+`enc.sh`和`dec.sh`是批量处理整个文件夹的音频，用法如下 （注意修改对应的路径）
+```
+sh enc.sh 
+sh dec.sh
+```
+
 安装到手机，别忘了通过手机应用安装提示
 ```
 adb install bazel-bin/android_example/lyra_android_example.apk
