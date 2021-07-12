@@ -36,7 +36,7 @@ const int kVersionMicro = 1;
 const int kNumFeatures = 160;
 const int kNumExpectedOutputFeatures = 160;
 const int kNumChannels = 1;
-const int kFrameRate = 25;
+const int kFrameRate = 50; // origin is  25
 const int kFrameOverlapFactor = 2;
 const int kNumFramesPerPacket = 1;
 

@@ -6,14 +6,14 @@
             "preLaunchTask": "build",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bazel-bin/decoder_main",
+            "program": "${workspaceFolder}/bazel-bin/encoder_main",
             "args": [
                 "--model_path=${workspaceFolder}/wavegru",
                 "--output_dir=$HOME/temp",
-                "--encoded_path=$HOME/temp/16khz_sample_000001.lyra"
+                "--input_path=${workspaceFolder}/testdata/16khz_sample_000001.wav"
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/bazel-bin/decoder_main.runfiles/__main__/",
+            "cwd": "${workspaceFolder}/bazel-bin/encoder_main.runfiles/__main__/",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",

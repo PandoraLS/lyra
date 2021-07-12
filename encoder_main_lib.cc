@@ -70,6 +70,7 @@ bool EncodeWav(const std::vector<int16_t>& wav_data, int num_channels,
 
   const int num_samples_per_packet =
       kNumFramesPerPacket * sample_rate_hz / encoder->frame_rate();
+  int temp_encoder_frame_rate = encoder->frame_rate();
   // Iterate over the wav data until the end of the vector.
   for (int wav_iterator = 0;
        wav_iterator + num_samples_per_packet <= processed_data.size();

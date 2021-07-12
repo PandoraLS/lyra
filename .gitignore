@@ -12,3 +12,6 @@ bazel-bin/
 bazel-lyra/
 bazel-out/
 bazel-testlogs/
+
+# 测试文件夹
+example/

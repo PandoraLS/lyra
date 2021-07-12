@@ -1,4 +1,3 @@
-#!/bin/bash
 ######################################################################
 ##                                                                  
 ##   遍历指定目录获取当前目录下指定后缀（wav）的文件名          
@@ -36,11 +35,11 @@ check_suffix()
     # if [ "${file##*.}"x = "wav"x ] || [ "${file##*.}"x = "txt"x ];then
     if [ "${file##*.}"x = "wav"x ];then
         echo $file
-        bazel-bin/encoder_main --model_path=wavegru --output_dir=example/CHINESE_MANDARIN/ --input_path=$file # 编码，注意修改文件夾
+        bazel-bin/encoder_main --model_path=wavegru --output_dir=example/CHINESE_MANDARIN_3kbps/ --input_path=$file # 编码，注意修改文件夾
     fi    
 }
 
 
 #测试指定目录  /data_output/ci/history
 # traverse_dir example/McGillTSP-16k-LP7-FA
-traverse_dir example/CHINESE_MANDARIN
+traverse_dir example/CHINESE_MANDARIN_3kbps

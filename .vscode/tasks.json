@@ -5,7 +5,7 @@
             "label": "build",
             "type": "shell",
             // "command": "bazel build --compilation_mode=dbg //...",
-            "command": "bazel build -c dbg :decoder_main",
+            "command": "bazel build -c dbg :encoder_main",
             "group": {
                 "kind": "build",
                 "isDefault": true
